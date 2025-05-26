@@ -1,50 +1,95 @@
-# Welcome to your Expo app 👋
+# 🔢 Sortify — Sorting Algorithm Visualizer
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**Sortify** is a beginner-friendly DSA (Data Structures & Algorithms) educational app built using **React Native** and **Expo**. The app provides a visual and interactive way to learn how sorting algorithms work — ideal for students, educators, and coding enthusiasts.
 
-## Get started
+> 🎯 Focus: Learn and understand sorting algorithms through visual animations and step-by-step breakdowns.
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+## 🚀 Features
 
-2. Start the app
+* 📊 Visualize popular sorting algorithms in action
+* ⏩ Step-by-step or auto-play visualization
+* ⚙️ Adjustable speed and array size
+* 🎨 Interactive user interface for enhanced learning
+* 📱 Works on Android, iOS, and Web (via Expo)
 
-   ```bash
-   npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
+## ✨ Supported Algorithms
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+* 🔁 Bubble Sort
+* ⛓️ Selection Sort
+* ⚡ Insertion Sort
+* 🔂 Merge Sort
+* ⚔️ Quick Sort
+* ➕ More coming soon!
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## 📲 Getting Started
 
-When you're ready, run:
+### 1. Clone the Repository
 
 ```bash
-npm run reset-project
+git clone https://github.com/Vanshvala23/Sortify.git
+cd sortify
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2. Install Dependencies
 
-## Learn more
+```bash
+npm install
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+### 3. Start the App
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+npx expo start
+```
 
-## Join the community
+Use Expo Go on your mobile device or launch an emulator/simulator to view the app.
 
-Join our community of developers creating universal apps.
+---
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## 🧠 Learn More
+
+* [DSA Visualization Concepts](https://visualgo.net/en/sorting)
+* [Expo Docs](https://docs.expo.dev/)
+* [React Native](https://reactnative.dev/)
+
+---
+
+## 🛠️ Technologies Used
+
+* **React Native**
+* **Expo**
+* **TypeScript / JavaScript**
+* **Tailwind CSS (via NativeWind)**
+* **Animated API / Reanimated (for transitions)**
+
+---
+
+## 🤝 Contributing
+
+Want to contribute to Sortify?
+
+1. Fork the repository
+2. Create a new branch: `git checkout -b feature/YourFeatureName`
+3. Make your changes and commit: `git commit -m "Add your feature"`
+4. Push to your branch: `git push origin feature/YourFeatureName`
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is open-source and available under the [MIT License](LICENSE).
+
+---
+
+## 📬 Contact
+
+Created with ❤️ by [Your Name](https://github.com/yourusername)
+
+Have questions? Open an issue or connect via [LinkedIn](https://linkedin.com/in/yourprofile).
