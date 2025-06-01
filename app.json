@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "sorting-visuals",
+    "name": "Sortify",
     "slug": "sorting-visuals",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/sort.png",
     "scheme": "sortingvisuals",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -16,7 +16,9 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.vansh11.sortingvisuals",
+      "enablePngCrunchInReleaseBuilds": false
     },
     "web": {
       "bundler": "metro",
@@ -37,6 +39,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "07c25b9e-335f-4ff6-9e5f-ba26caa5364c"
+      }
     }
   }
 }
