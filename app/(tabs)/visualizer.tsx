@@ -5,7 +5,6 @@ import { Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View
 import { useThemeColor } from '../../hooks/useThemeColor';
 
 const screenWidth = Dimensions.get('window').width;
-
 const generateArray = (size = 20) => Array.from({ length: size }, () => Math.floor(Math.random() * 100));
 
 const sortingAlgorithms = [
@@ -13,8 +12,7 @@ const sortingAlgorithms = [
     name: 'Bubble Sort',
     key: 'bubble',
     image: require('../../assets/images/bubble.png'),
-    description:
-      'Bubble Sort repeatedly swaps adjacent elements if they are in wrong order.',
+    description: 'Bubble Sort repeatedly swaps adjacent elements if they are in wrong order.',
     timeComplexity: 'O(n²)',
     spaceComplexity: 'O(1)',
   },
@@ -22,8 +20,7 @@ const sortingAlgorithms = [
     name: 'Selection Sort',
     key: 'selection',
     image: require('../../assets/images/Selection.png'),
-    description:
-      'Selection Sort selects the minimum element from unsorted part and swaps it with the beginning.',
+    description: 'Selection Sort selects the minimum element from unsorted part and swaps it with the beginning.',
     timeComplexity: 'O(n²)',
     spaceComplexity: 'O(1)',
   },
@@ -31,9 +28,32 @@ const sortingAlgorithms = [
     name: 'Insertion Sort',
     key: 'insertion',
     image: require('../../assets/images/insertion.png'),
-    description:
-      'Insertion Sort builds the sorted array one element at a time by inserting elements into the correct position.',
+    description: 'Insertion Sort builds the sorted array one element at a time by inserting elements into the correct position.',
     timeComplexity: 'O(n²)',
+    spaceComplexity: 'O(1)',
+  },
+  {
+    name: 'Merge Sort',
+    key: 'merge',
+    image: require('../../assets/images/merge.png'),
+    description: 'Merge Sort divides the array into halves, sorts them, and then merges them back together.',
+    timeComplexity: 'O(n log n)',
+    spaceComplexity: 'O(n)',
+  },
+  {
+    name: 'Quick Sort',
+    key: 'quick',
+    image: require('../../assets/images/quick.png'),
+    description: 'Quick Sort picks a pivot and partitions the array around the pivot, then recursively sorts the partitions.',
+    timeComplexity: 'O(n log n)',
+    spaceComplexity: 'O(log n)',
+  },
+  {
+    name: 'Heap Sort',
+    key: 'heap',
+    image: require('../../assets/images/heap.png'),
+    description: 'Heap Sort builds a max heap from the array and repeatedly extracts the maximum element to build the sorted array.',
+    timeComplexity: 'O(n log n)',
     spaceComplexity: 'O(1)',
   },
 ];
@@ -43,13 +63,85 @@ export default function Visualizer() {
   const [sorting, setSorting] = useState(false);
   const [selectedAlgo, setSelectedAlgo] = useState(sortingAlgorithms[0]);
   const [speed, setSpeed] = useState(200);
-  const [activeIndices, setActiveIndices] = useState<number[]>([]); // to highlight bars
+  const [activeIndices, setActiveIndices] = useState<number[]>([]);
 
   const bg = useThemeColor({ light: '#fff', dark: '#000' }, 'background');
   const text = useThemeColor({}, 'text');
   const barColor = useThemeColor({}, 'tabIconSelected');
 
   const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
+  const mergeSort = async (arr: number[], l: number, r: number): Promise<number[]> => {
+    if (l >= r) return [arr[l]];
+
+    const mid = Math.floor((l + r) / 2);
+    const left = await mergeSort(arr, l, mid);
+    const right = await mergeSort(arr, mid + 1, r);
+
+    return await merge(left, right);
+  };
+
+  const merge = async (left: number[], right: number[]): Promise<number[]> => {
+    const merged: number[] = [];
+    let i = 0, j = 0;
+
+    while (i < left.length && j < right.length) {
+      const idxL = data.indexOf(left[i]);
+      const idxR = data.indexOf(right[j]);
+      setActiveIndices([idxL, idxR]);
+      await sleep(speed);
+
+      if (left[i] <= right[j]) {
+        merged.push(left[i++]);
+      } else {
+        merged.push(right[j++]);
+      }
+    }
+
+    while (i < left.length) merged.push(left[i++]);
+    while (j < right.length) merged.push(right[j++]);
+
+    const start = data.indexOf(left[0]);
+    const updated = [...data];
+    for (let k = 0; k < merged.length; k++) {
+      updated[start + k] = merged[k];
+    }
+
+    setData([...updated]);
+    await sleep(speed);
+
+    return merged;
+  };
+  const quickSort = async (arr: number[], low: number, high: number): Promise<number[]> => {
+    if (low < high) {
+      const pi = await partition(arr, low, high);
+      await quickSort(arr, low, pi - 1);
+      await quickSort(arr, pi + 1, high);
+    }
+    return arr;
+  }
+  const partition = async (arr: number[], low: number, high: number): Promise<number> => {
+    const pivot = arr[high];
+    let i = low - 1;
+
+    for (let j = low; j <= high - 1; j++) {
+      const idxL = data.indexOf(arr[i]);
+      const idxR = data.indexOf(arr[j]);
+      setActiveIndices([idxL, idxR]);
+      await sleep(speed);
+
+      if (arr[j] < pivot) {
+        i++;
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+        setData([...arr]);
+      }
+    }
+    [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
+    setData([...arr]);
+    await sleep(speed);
+
+    return i + 1;
+  }
 
   const runSort = async () => {
     setSorting(true);
@@ -63,10 +155,8 @@ export default function Visualizer() {
             if (arr[j] > arr[j + 1]) {
               [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
               setData([...arr]);
-              await sleep(speed);
-            } else {
-              await sleep(speed);
             }
+            await sleep(speed);
           }
         }
         break;
@@ -91,12 +181,10 @@ export default function Visualizer() {
         for (let i = 1; i < arr.length; i++) {
           let key = arr[i];
           let j = i - 1;
-          setActiveIndices([i]);
-          await sleep(speed);
           while (j >= 0 && arr[j] > key) {
             setActiveIndices([j, j + 1]);
             arr[j + 1] = arr[j];
-            j = j - 1;
+            j--;
             setData([...arr]);
             await sleep(speed);
           }
@@ -105,6 +193,17 @@ export default function Visualizer() {
           await sleep(speed);
         }
         break;
+
+      case 'merge':
+        await mergeSort(arr, 0, arr.length - 1);
+        break;
+        
+      case 'quick':
+        await quickSort(arr, 0, arr.length - 1);
+        alert('This algorithm is not implemented yet.');
+        break;
+      default:
+        alert('This algorithm is not implemented yet.');
     }
 
     setActiveIndices([]);
@@ -135,7 +234,7 @@ export default function Visualizer() {
       {/* Algorithm Image */}
       <Image source={selectedAlgo.image} style={styles.referenceImage} resizeMode="contain" />
 
-      {/* Algorithm Info */}
+      {/* Info Box */}
       <View style={styles.infoBox}>
         <Text style={[styles.infoText, { color: text }]}>{selectedAlgo.description}</Text>
         <Text style={[styles.infoText, { color: text }]}>
@@ -146,7 +245,7 @@ export default function Visualizer() {
         </Text>
       </View>
 
-      {/* Bars */}
+      {/* Bar Chart */}
       <View style={styles.barContainer}>
         {data.map((val, idx) => {
           const isActive = activeIndices.includes(idx);
@@ -156,7 +255,7 @@ export default function Visualizer() {
               style={{
                 height: val * 2,
                 width: screenWidth / data.length - 4,
-                backgroundColor: isActive ? '#ef4444' : barColor, // active bars in red
+                backgroundColor: isActive ? '#ef4444' : barColor,
                 marginHorizontal: 2,
                 borderRadius: 4,
               }}
@@ -186,12 +285,15 @@ export default function Visualizer() {
         </View>
       </View>
 
-      {/* Start Sorting Button */}
-      <TouchableOpacity style={[styles.sortBtn, sorting && styles.disabledBtn]} onPress={runSort} disabled={sorting}>
+      {/* Buttons */}
+      <TouchableOpacity
+        style={[styles.sortBtn, sorting && styles.disabledBtn]}
+        onPress={runSort}
+        disabled={sorting}
+      >
         <Text style={styles.btnText}>Start Sorting</Text>
       </TouchableOpacity>
 
-      {/* Regenerate Array Button */}
       <TouchableOpacity
         style={[styles.sortBtn, { backgroundColor: '#334155' }, sorting && styles.disabledBtn]}
         onPress={() => setData(generateArray())}
@@ -204,7 +306,7 @@ export default function Visualizer() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16 },
+  container: { flex: 1, padding: 16, height: '100%'},
   title: { fontSize: 28, fontWeight: 'bold', textAlign: 'center', marginBottom: 16 },
   algoList: { flexDirection: 'row', marginBottom: 16 },
   algoButton: {
